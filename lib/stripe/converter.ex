@@ -45,6 +45,7 @@ defmodule Stripe.Converter do
     issuing.card
     issuing.cardholder
     issuing.transaction
+    item
     line_item
     list
     login_link

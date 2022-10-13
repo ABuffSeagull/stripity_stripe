@@ -155,7 +155,7 @@ defmodule Stripe.Session do
           }
         }
 
-  @type line_item_create :: %{
+  @type line_item_data :: %{
           optional(:id) => Stripe.id(),
           optional(:object) => String.t(),
           optional(:quantity) => integer(),
@@ -169,18 +169,7 @@ defmodule Stripe.Session do
           optional(:dynamic_tax_rates) => list(String.t()),
           optional(:price) => String.t(),
           optional(:price_data) => price_data,
-          optional(:taxes) => list(map)
-        }
-
-  @type line_item :: %{
-          id: Stripe.id(),
-          object: String.t(),
-          amount_subtotal: non_neg_integer,
-          amount_total: non_neg_integer,
-          currency: String.t(),
-          description: String.t(),
-          price: Stripe.Price.t(),
-          quantity: non_neg_integer
+          optional(:taxes) => [map]
         }
 
   @type adjustable_quantity :: %{
@@ -254,7 +243,7 @@ defmodule Stripe.Session do
           optional(:currency) => String.t(),
           optional(:customer) => String.t(),
           optional(:customer_email) => String.t(),
-          optional(:line_items) => list(line_item_create()),
+          optional(:line_items) => list(line_item_data()),
           optional(:locale) => String.t(),
           optional(:metadata) => Stripe.Types.metadata(),
           optional(:after_expiration) => expiration(),
@@ -316,7 +305,7 @@ defmodule Stripe.Session do
           customer_creation: customer_creation() | nil,
           customer_details: customer_details() | nil,
           customer_email: String.t(),
-          line_items: Stripe.List.t(line_item) | nil,
+          line_items: Stripe.List.t(Stripe.Checkout.Session.LineItems.t()) | nil,
           expires_at: Stripe.timestamp() | nil,
           livemode: boolean(),
           locale: boolean(),
